@@ -1,3 +1,4 @@
+# initial commit
 from flask import Flask
 
 from controllers.admin_controller import admin_controller
