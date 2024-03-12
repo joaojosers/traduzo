@@ -1,4 +1,4 @@
-# initial commit
+from controllers.translate_controller import translate_controller
 from flask import Flask
 
 from controllers.admin_controller import admin_controller
@@ -12,6 +12,7 @@ app.template_folder = "views/templates"
 app.static_folder = "views/static"
 
 app.register_blueprint(admin_controller, url_prefix="/admin")
+app.register_blueprint(translate_controller)
 
 
 def start_server(host="0.0.0.0", port=8000):
