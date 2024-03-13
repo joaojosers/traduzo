@@ -12,7 +12,7 @@ app.template_folder = "views/templates"
 app.static_folder = "views/static"
 
 app.register_blueprint(admin_controller, url_prefix="/admin")
-app.register_blueprint(translate_controller)
+app.register_blueprint(translate_controller, url_prefix="/")
 
 
 def start_server(host="0.0.0.0", port=8000):

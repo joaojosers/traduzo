@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request
 from models.language_model import LanguageModel
 from deep_translator import GoogleTranslator
 
@@ -24,14 +24,13 @@ def index():
 
 
 # translate_controller = Blueprint("translate", __name__)
-
-
 @translate_controller.route("/", methods=["POST"])
 def translate_text():
     # Receber parâmetros do corpo da solicitação
-    text_to_translate = request.form.get("text_to_translate")
-    translate_from = request.form.get("translate_from")
-    translate_to = request.form.get("translate_to")
+    languages = LanguageModel.list_dicts()
+    text_to_translate = request.form.get("text-to-translate")
+    translate_from = request.form.get("translate-from")
+    translate_to = request.form.get("translate-to")
 
     # Realizar a tradução do texto
     translated_text = GoogleTranslator(
@@ -39,4 +38,35 @@ def translate_text():
     ).translate(text_to_translate)
 
     # Retornar o texto traduzido
-    return jsonify({"translated": translated_text})
+    return render_template(
+        "index.html",
+        languages=languages,
+        text_to_translate=text_to_translate,
+        translate_from=translate_from,
+        translate_to=translate_to,
+        translated=translated_text,
+    )
+
+
+# @translate_controller.route("/", methods=["POST"])
+# def translate_text():
+#     # Receber parâmetros do corpo da solicitação
+#     text_to_translate = request.form.get("text_to_translate")
+#     translate_from = request.form.get("translate_from")
+#     translate_to = request.form.get("translate_to")
+
+#     # Realizar a tradução do texto
+#     translated_text = GoogleTranslator(
+#         source=translate_from, target=translate_to
+#     ).translate(text_to_translate)
+
+#     # Retornar o texto traduzido
+#     # return jsonify({"translated": translated_text})
+#     return render_template(
+#         "index.html",
+#         text_to_translate=text_to_translate,
+#         translate_from=translate_from,
+#         translate_to=translate_to,
+#         translated=translated_text
+#         # languages = LanguageModel.list_dicts()
+#     )
